@@ -111,6 +111,18 @@ Access your application at: http://localhost
 
 📖 **[Complete Standalone Deployment Guide](STANDALONE_DEPLOYMENT.md)**
 
+### 🌟 Coolify Deployment (One-Click Cloud Deployment)
+
+Deploy directly in Coolify using pre-built Docker images - **no repository cloning required!**
+
+**In Coolify Dashboard:**
+1. **New Resource** → **Docker Compose**
+2. **Paste** the contents of `docker-compose.coolify.yml`
+3. **Configure** environment variables (API keys)
+4. **Deploy!**
+
+📖 **[Complete Coolify Deployment Guide](COOLIFY_DEPLOYMENT.md)**
+
 ### Alternative: Development Setup
 
 1. **Clone and setup**:
