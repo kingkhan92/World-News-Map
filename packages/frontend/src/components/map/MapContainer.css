@@ -1,0 +1,86 @@
+/* MapContainer responsive styles */
+.map-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-container .view-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .map-container .view-toggle {
+    top: 8px;
+    right: 8px;
+  }
+  
+  .map-container .view-toggle .MuiToggleButtonGroup-root {
+    flex-direction: column;
+  }
+  
+  .map-container .view-toggle .MuiToggleButton-root {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .map-container .view-toggle .MuiToggleButton-root {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Transition animations */
+.map-container .transition-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Performance optimizations */
+.map-container .map-view,
+.map-container .globe-view {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Accessibility improvements */
+.map-container .view-toggle button:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .map-container .view-toggle {
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .map-container .MuiFade-root {
+    transition: none !important;
+  }
+  
+  .map-container .MuiZoom-root {
+    transition: none !important;
+  }
+}

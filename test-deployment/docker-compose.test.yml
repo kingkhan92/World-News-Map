@@ -1,0 +1,55 @@
+version: '3.8'
+
+# Test version of standalone deployment that builds locally
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: news-map-postgres-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: news_map_db
+      POSTGRES_USER: news_map_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    networks:
+      - news-map-test-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U news_map_user -d news_map_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: news-map-redis-test
+    restart: unless-stopped
+    command: redis-server --requirepass test_password --appendonly yes --appendfsync everysec
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_test_data:/data
+    networks:
+      - news-map-test-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "test_password", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  news-map-test-network:
+    driver: bridge
+
+volumes:
+  postgres_test_data:
+    driver: local
+  redis_test_data:
+    driver: local
